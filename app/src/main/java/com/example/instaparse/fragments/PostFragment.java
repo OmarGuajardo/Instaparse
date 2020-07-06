@@ -66,15 +66,14 @@ public class PostFragment extends Fragment {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
+        query.setLimit(20);
+        query.addDescendingOrder(Post.KEY_CREATED_KEY);
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
                 if(e != null){
                     Log.e(TAG, "error with querying posts", e );
                     return;
-                }
-                for(Post post: posts){
-                    Log.d(TAG, "this is the post desc " + post.getDescription() + " username " +post.getUser().getUsername());
                 }
                 listPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
