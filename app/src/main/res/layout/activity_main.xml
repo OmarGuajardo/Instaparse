@@ -6,4 +6,36 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:hint="Description..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnTakePicture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Take Picture"/>
+
+        <ImageView
+            android:id="@+id/ivPostPicture"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:text="Submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
