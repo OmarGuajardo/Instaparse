@@ -27,9 +27,9 @@ import java.util.List;
 public class PostFragment extends Fragment {
 
     public String TAG = "PostFragment";
-    RecyclerView rvPosts;
-    PostAdapter adapter;
-    List<Post> listPosts;
+    protected RecyclerView rvPosts;
+    protected PostAdapter adapter;
+    protected List<Post> listPosts;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -62,7 +62,7 @@ public class PostFragment extends Fragment {
     }
 
 
-    private void queryPosts() {
+    protected void queryPosts() {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);

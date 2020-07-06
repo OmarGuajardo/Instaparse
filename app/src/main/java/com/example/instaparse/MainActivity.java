@@ -66,10 +66,8 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new ComposeFragment();
                         break;
                     case R.id.action_profile:
-                        // do something here
-                        break;
                     default:
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();

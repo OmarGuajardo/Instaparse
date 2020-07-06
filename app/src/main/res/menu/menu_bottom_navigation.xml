@@ -15,6 +15,6 @@
         android:id="@+id/action_profile"
         app:showAsAction="always"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="Home" />
+        android:title="Profile" />
 
 </menu>
