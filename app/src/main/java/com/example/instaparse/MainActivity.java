@@ -26,6 +26,7 @@ import com.example.instaparse.fragments.ComposeFragment;
 import com.example.instaparse.fragments.PostFragment;
 import com.example.instaparse.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -48,12 +49,14 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         final FragmentManager fragmentManager = getSupportFragmentManager();
+        View contextView = findViewById(R.id.relativeLayout);
 
+        Snackbar.make(contextView, "Welcome Home!", Snackbar.LENGTH_LONG)
+                .show();
         binding.topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if(item.getItemId() == R.id.btnLogout){
-                    Toast.makeText(MainActivity.this, "We want to log out!", Toast.LENGTH_SHORT).show();
                     ParseUser.logOut();
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);

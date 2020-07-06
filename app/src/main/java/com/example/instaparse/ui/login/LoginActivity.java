@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
 
         if(ParseUser.getCurrentUser() != null){
             goMainActivity();
-            Toast.makeText(this, "already logged in", Toast.LENGTH_SHORT).show();
         }
 
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
