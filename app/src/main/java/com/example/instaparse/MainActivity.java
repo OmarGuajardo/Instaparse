@@ -3,6 +3,7 @@ package com.example.instaparse;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.example.instaparse.databinding.ActivityMainBinding;
 import com.example.instaparse.fragments.ComposeFragment;
 import com.example.instaparse.fragments.PostFragment;
+import com.example.instaparse.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -47,9 +49,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
-
-//        queryPosts();
-
+        binding.topAppBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId() == R.id.btnLogout){
+                    Toast.makeText(MainActivity.this, "We want to log out!", Toast.LENGTH_SHORT).show();
+                    ParseUser.logOut();
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+                return true;
+            };
+        });
 
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
