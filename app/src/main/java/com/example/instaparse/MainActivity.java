@@ -1,8 +1,10 @@
 package com.example.instaparse;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,11 +14,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.instaparse.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        queryPosts();
 
+        //Will open the camera
         binding.btnTakePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 launchCamera();
             }
         });
+        //Will handle the submission of the post
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,8 +75,32 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Description must not be empty", Toast.LENGTH_SHORT).show();
             }
         });
+
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
+                switch (item.getItemId()) {
+                    case R.id.action_home:
+                        Toast.makeText(MainActivity.this, "Clicked Home", Toast.LENGTH_SHORT).show();
+                        // do something here
+                        return true;
+                    case R.id.action_compose:
+                        // do something here
+                        Toast.makeText(MainActivity.this, "Clicked Compose", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.action_profile:
+                        // do something here
+                        Toast.makeText(MainActivity.this, "Clicked Profile", Toast.LENGTH_SHORT).show();
+                        return true;
+                    default: return true;
+                }
+            }
+        });
     }
 
+    //This methods calls and intent to launch the camera, take the picture and save the picture as a file that
+    //we can then use to put in the ImageView
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -95,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //In here is where we check if the picture we took was successfully taken so we can then
+    //display it in the ImageView
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -127,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //Will make a new object of Post and set the data accordingly
+    //Then will save it to the DB
     private void savePost(String description, ParseUser currentUser,File photoFile) {
         Post post = new Post();
         post.setDescription(description);
