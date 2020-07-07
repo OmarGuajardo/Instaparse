@@ -9,7 +9,7 @@
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -19,10 +19,14 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Instagram"
             app:menu="@menu/top_app_bar"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
-            />
+            style="@style/Widget.MaterialComponents.Toolbar.Primary">
+            <ImageView
+                android:layout_width="108dp"
+                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:background="@drawable/nav_logo_whiteout"/>
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -51,8 +55,11 @@
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        style="@style/AppTheme"
         android:id="@+id/bottomNavigation"
         android:background="@color/cardview_light_background"
+        app:itemIconTint="@drawable/tab_color"
+        app:itemTextColor="@drawable/tab_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
