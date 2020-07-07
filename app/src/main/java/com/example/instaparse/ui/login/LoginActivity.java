@@ -31,6 +31,7 @@ import com.example.instaparse.ui.login.LoginViewModelFactory;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        final Button registerButton = findViewById(R.id.register);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +63,15 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(usernameEditText.getText().toString(),passwordEditText.getText().toString());
             }
         });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerUser(usernameEditText.getText().toString(),passwordEditText.getText().toString());
+            }
+        });
+
+
     }
 
     private void loginUser(String username,String password){
@@ -78,6 +89,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void registerUser(String username,String password){
+        Log.i(TAG, "attempting to register user "+username);
+        ParseUser newUser = new ParseUser();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        newUser.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Toast.makeText(LoginActivity.this, "Eror Singing Up User", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                goMainActivity();
+            }
+        });
     }
 
     private void goMainActivity() {

@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:id="@+id/relativeLayout"
     android:fitsSystemWindows="true"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -34,6 +36,7 @@
 
     <!-- Note: A RecyclerView can also be used -->
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -64,6 +67,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:menu="@menu/menu_bottom_navigation" />
-
 </RelativeLayout>
 
