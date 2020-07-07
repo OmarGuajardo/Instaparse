@@ -17,6 +17,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             android:layout_height="?attr/actionBarSize">
 
             <com.google.android.material.appbar.MaterialToolbar
@@ -42,6 +43,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:orientation="vertical"
+            android:layout_marginBottom="110dp"
             android:layout_above="@+id/bottomNavigation"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
@@ -56,5 +58,6 @@
         app:itemIconTint="@drawable/tab_color"
         app:itemTextColor="@drawable/tab_color"
         app:menu="@menu/menu_bottom_navigation" />
+
 </RelativeLayout>
 
