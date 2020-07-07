@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/relativeLayout"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -55,7 +56,6 @@
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        style="@style/AppTheme"
         android:id="@+id/bottomNavigation"
         android:background="@color/cardview_light_background"
         app:itemIconTint="@drawable/tab_color"
