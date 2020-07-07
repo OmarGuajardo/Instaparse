@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             tools:text="omar_gdog" />
 
         <ImageView
@@ -34,6 +34,7 @@
             android:id="@+id/tvPostDescription"
             android:layout_width="match_parent"
             android:layout_margin="4dp"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_height="wrap_content"
             tools:text="Omg I just posted a picture on Parse and it's so called that it is Node based, even though I'm not to on what Node.js actually means but it's still pretty cool" />
     </LinearLayout>
