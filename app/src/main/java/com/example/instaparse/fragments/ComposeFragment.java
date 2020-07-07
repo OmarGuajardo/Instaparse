@@ -1,5 +1,6 @@
 package com.example.instaparse.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -42,7 +43,6 @@ import java.util.List;
  */
 public class ComposeFragment extends Fragment {
 
-    private static final int RESULT_OK = 42;
     private EditText etDescription;
     private ImageView ivPostPicture;
     private Button btnSubmit;
@@ -215,14 +215,18 @@ public class ComposeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(getContext(), "Picture WAS't taken! ", Toast.LENGTH_SHORT).show();
+
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
                 ivPostPicture.setImageBitmap(takenImage);
             } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Picture wasn't taken! " + resultCode, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
+
             }
         }
     }
