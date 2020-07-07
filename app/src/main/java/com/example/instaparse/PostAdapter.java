@@ -20,6 +20,8 @@ import com.parse.ParseFile;
 import org.parceler.Parcels;
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
@@ -57,6 +59,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView tvUserName;
         ImageView ivPostPicture;
         TextView tvPostDescription;
+        TextView tvTimeStamp;
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -65,6 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             ivPostPicture = itemView.findViewById(R.id.ivPostPictureFeed);
             tvPostDescription = itemView.findViewById(R.id.tvPostDescription);
             cardView = itemView.findViewById(R.id.cardView);
+            tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
         }
 
 
@@ -88,6 +92,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     context.startActivity(i);
                 }
             });
+            Date date = post.getCreatedAt();
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
+            String stringDate = DateFor.format(date);
+            tvTimeStamp.setText(stringDate);
         }
     }
 }

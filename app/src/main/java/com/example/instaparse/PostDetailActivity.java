@@ -16,6 +16,9 @@ import com.google.android.material.appbar.MaterialToolbar;
 
 import org.parceler.Parcels;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class PostDetailActivity extends AppCompatActivity {
 
     MaterialToolbar toolbar;
@@ -26,6 +29,7 @@ public class PostDetailActivity extends AppCompatActivity {
     ImageButton btnLike;
     ImageButton btnComment;
     TextView tvPostDescription;
+    TextView tvTimeStamp;
 
 
 
@@ -47,6 +51,7 @@ public class PostDetailActivity extends AppCompatActivity {
         btnLike = findViewById(R.id.btnLike);
         btnComment = findViewById(R.id.btnComment);
         tvPostDescription = findViewById(R.id.tvPostDescription);
+        tvTimeStamp = findViewById(R.id.tvTimeStamp);
 
         //Unpacking the Extras
         post = Parcels.unwrap(getIntent().getParcelableExtra("postSelected"));
@@ -58,6 +63,10 @@ public class PostDetailActivity extends AppCompatActivity {
                 .load(post.getImage().getUrl())
                 .centerCrop()
                 .into(ivPostPictureFeed);
+        Date date = post.getCreatedAt();
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
+        String stringDate = DateFor.format(date);
+        tvTimeStamp.setText(stringDate);
 
     }
     @Override
