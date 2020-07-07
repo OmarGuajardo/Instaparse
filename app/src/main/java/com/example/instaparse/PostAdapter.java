@@ -2,6 +2,7 @@ package com.example.instaparse;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcel;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.parse.ParseFile;
 
+import org.parceler.Parcels;
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -66,7 +68,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
 
 
-        public void bind(Post post) {
+        public void bind(final Post post) {
 
             //Bind the data to the view elements
             tvUserName.setText(post.getUser().getUsername());
@@ -82,6 +84,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(context,PostDetailActivity.class);
+                    i.putExtra("postSelected", Parcels.wrap(post));
                     context.startActivity(i);
                 }
             });

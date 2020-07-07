@@ -89,12 +89,14 @@
                 android:padding="4dp">
 
                 <ImageButton
+                    android:id="@+id/btnLike"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
                     android:background="@drawable/ufi_heart" />
 
                 <ImageButton
+                    android:id="@+id/btnComment"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginRight="8dp"
