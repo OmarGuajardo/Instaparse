@@ -97,27 +97,32 @@ public class ComposeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         etDescription = view.findViewById(R.id.etDescription);
         btnSubmit = view.findViewById(R.id.btnSubmit);
-        btnTakePicture = view.findViewById(R.id.btnTakePicture);
+//        btnTakePicture = view.findViewById(R.id.btnTakePicture);
         ivPostPicture = view.findViewById(R.id.ivPostPicture);
         super.onViewCreated(view, savedInstanceState);
 
-        //Will open the camera
-        btnTakePicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //launch camera
-                launchCamera();
-            }
-        });
+//        //Will open the camera
+//        btnTakePicture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //launch camera
+//                launchCamera();
+//            }
+//        });
+        launchCamera();
         //Will handle the submission of the post
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String description = etDescription.getText().toString();
                 if(!description.isEmpty()){
+                    Toast.makeText(getContext(), "Posting picture...", Toast.LENGTH_SHORT).show();
+                    btnSubmit.setEnabled(false);
                     //Allow user to make post
                     ParseUser currentUser = ParseUser.getCurrentUser();
                     savePost(description,currentUser,photoFile);
+                    Toast.makeText(getContext(), "Picture Posted!", Toast.LENGTH_SHORT).show();
+                    btnSubmit.setEnabled(true);
                     return;
                 }
                 if(photoFile == null || ivPostPicture.getDrawable() == null){
@@ -216,7 +221,7 @@ public class ComposeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(getContext(), "Picture WAS't taken! ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Picture taken successfully", Toast.LENGTH_SHORT).show();
 
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
@@ -224,7 +229,7 @@ public class ComposeFragment extends Fragment {
                 // Load the taken image into a preview
                 ivPostPicture.setImageBitmap(takenImage);
             } else { // Result was a failure
-                Toast.makeText(getContext(), "Picture wasn't taken! " + resultCode, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
 //                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
 
             }
