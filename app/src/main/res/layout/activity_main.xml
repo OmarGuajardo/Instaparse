@@ -14,27 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            android:layout_height="?attr/actionBarSize">
-
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:menu="@menu/top_app_bar">
-
-                <ImageView
-                    android:layout_width="108dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@drawable/nav_logo_whiteout" />
-            </com.google.android.material.appbar.MaterialToolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
+       <include layout="@layout/custom_top_bar"/>
 
 
         <FrameLayout

@@ -13,6 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <LinearLayout
+            android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -20,8 +21,8 @@
             <ImageView
                 android:id="@+id/ivProfilePictureDetails"
                 android:background="@drawable/ic_baseline_person_24"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
 
                  />
 

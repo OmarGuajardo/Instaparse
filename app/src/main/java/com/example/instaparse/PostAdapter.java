@@ -75,10 +75,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
 
         public void bind(final Post post) {
-
+            Date date = post.getCreatedAt();
+            SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
+            String stringDate = DateFor.format(date);
             //Bind the data to the view elements
             tvUserName.setText(post.getUser().getUsername());
             tvPostDescription.setText(post.getDescription());
+            tvTimeStamp.setText(stringDate);
+
             ParseFile image = post.getImage();
             Log.d(TAG, "image normal + "+ image);
             if(image != null){
@@ -100,10 +104,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     context.startActivity(i);
                 }
             });
-            Date date = post.getCreatedAt();
-            SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
-            String stringDate = DateFor.format(date);
-            tvTimeStamp.setText(stringDate);
+
+            tvUserName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(context,ProfileActivity.class);
+                    context.startActivity(i);
+                }
+            });
+
         }
     }
 }
