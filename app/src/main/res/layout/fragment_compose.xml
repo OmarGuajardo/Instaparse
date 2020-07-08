@@ -39,6 +39,14 @@
             android:textColor="@color/primaryTextColor"
             android:layout_width="120dp"
             android:layout_height="wrap_content" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            />
+
     </LinearLayout>
 
 </FrameLayout>

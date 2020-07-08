@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.instaparse.MainActivity;
@@ -46,41 +47,23 @@ public class ComposeFragment extends Fragment {
     private EditText etDescription;
     private ImageView ivPostPicture;
     private Button btnSubmit;
-    private Button btnTakePicture;
 
 
     public String TAG = "ComposeFragment";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public String photoFileName = "photo.jpg";
+    private ProgressBar pb;
     File photoFile;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public ComposeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ComposeFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static ComposeFragment newInstance(String param1, String param2) {
         ComposeFragment fragment = new ComposeFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,28 +71,18 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         etDescription = view.findViewById(R.id.etDescription);
         btnSubmit = view.findViewById(R.id.btnSubmit);
-//        btnTakePicture = view.findViewById(R.id.btnTakePicture);
         ivPostPicture = view.findViewById(R.id.ivPostPicture);
-        super.onViewCreated(view, savedInstanceState);
 
-//        //Will open the camera
-//        btnTakePicture.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //launch camera
-//                launchCamera();
-//            }
-//        });
+        pb = view.findViewById(R.id.progressBar);
+        // run a background job and once complete
+//        pb.setVisibility(ProgressBar.INVISIBLE);
         launchCamera();
         //Will handle the submission of the post
         btnSubmit.setOnClickListener(new View.OnClickListener() {
@@ -119,11 +92,12 @@ public class ComposeFragment extends Fragment {
                 if(!description.isEmpty()){
                     Toast.makeText(getContext(), "Posting picture...", Toast.LENGTH_SHORT).show();
                     btnSubmit.setEnabled(false);
+                    btnSubmit.setVisibility(View.INVISIBLE);
+                    pb.setVisibility(ProgressBar.VISIBLE);
                     //Allow user to make post
                     ParseUser currentUser = ParseUser.getCurrentUser();
                     savePost(description,currentUser,photoFile);
-                    Toast.makeText(getContext(), "Picture Posted!", Toast.LENGTH_SHORT).show();
-                    btnSubmit.setEnabled(true);
+
                     return;
                 }
                 if(photoFile == null || ivPostPicture.getDrawable() == null){
@@ -210,6 +184,10 @@ public class ComposeFragment extends Fragment {
                 Log.d(TAG, "Post Saved succesful");
                 etDescription.setText("");
                 ivPostPicture.setImageResource(0);
+                Toast.makeText(getContext(), "Picture Posted!", Toast.LENGTH_SHORT).show();
+                btnSubmit.setEnabled(true);
+                btnSubmit.setVisibility(View.VISIBLE);
+                pb.setVisibility(View.INVISIBLE);
             }
         });
     }
