@@ -45,6 +45,8 @@ public class Post extends ParseObject {
         put(KEY_USER,user);
     }
 
+
+
     //Helper Methods
     public String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
