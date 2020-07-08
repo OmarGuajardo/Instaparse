@@ -96,6 +96,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     .centerCrop()
                     .into(ivPostPicture);
             }
+
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -109,6 +110,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(context,ProfileActivity.class);
+                    i.putExtra("userSelected", Parcels.wrap(post.getUser()));
                     context.startActivity(i);
                 }
             });

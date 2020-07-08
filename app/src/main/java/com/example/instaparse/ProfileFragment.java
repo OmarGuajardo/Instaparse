@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -46,11 +47,12 @@ public class ProfileFragment extends Fragment {
     //Views
     public String TAG = "PostFragment";
     protected RecyclerView rvPosts;
-    protected PostAdapter adapter;
-    protected List<Post> listPosts;
+    protected ProfileAdapter adapter;
+    protected List<Post> posts;
     protected ImageView ivProfilePictureDetails;
     protected TextView tvUserNameDetails;
     protected RecyclerView rvProfilePics;
+
     //Vars necessary for swiping actions
     protected SwipeRefreshLayout swipeContainer;
     protected EndlessRecyclerViewScrollListener scrollListener;
@@ -63,17 +65,28 @@ public class ProfileFragment extends Fragment {
 
 
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Setting the Global User
         currentUser = ParseUser.getCurrentUser();
 
-        //View Setting and Finding
+        //View Setting,Finding and Vars Setting
         ivProfilePictureDetails = view.findViewById(R.id.ivProfilePictureDetails);
         tvUserNameDetails = view.findViewById(R.id.tvUserNameDetails);
         rvProfilePics = view.findViewById(R.id.rvProfilePics);
         tvUserNameDetails.setText(currentUser.getUsername());
+        posts = new ArrayList<>();
+
+        //RecyclerView Setup
+        adapter = new ProfileAdapter(getContext(),posts);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),3);
+        rvProfilePics.setLayoutManager(gridLayoutManager);
+        rvProfilePics.setAdapter(adapter);
+
+        //Fetching posts
+        queryPosts();
 
         ivProfilePictureDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,10 +95,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Glide.with(getContext())
-                .load(currentUser.getParseFile("profilePicture").getUrl())
-                .circleCrop()
-                .into(ivProfilePictureDetails);
+        if(currentUser.getParseFile("profilePicture") != null){
+            Glide.with(getContext())
+                    .load(currentUser.getParseFile("profilePicture").getUrl())
+                    .circleCrop()
+                    .into(ivProfilePictureDetails);
+        }
+
     }
 
     public ProfileFragment() {
@@ -112,20 +128,20 @@ public class ProfileFragment extends Fragment {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.setLimit(5);
+        query.whereEqualTo(Post.KEY_USER,ParseUser.getCurrentUser());
         query.addDescendingOrder(Post.KEY_CREATED_KEY);
         query.findInBackground(new FindCallback<Post>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
+            public void done(List<Post> listPosts, ParseException e) {
                 if(e != null){
                     Log.e(TAG, "error with querying posts", e );
                     return;
                 }
-                listPosts.clear();
-                listPosts.addAll(posts);
+                posts.clear();
+                posts.addAll(listPosts);
                 adapter.notifyDataSetChanged();
-                Log.d(TAG, "retrieved posts ");
-                swipeContainer.setRefreshing(false);
+                Log.d(TAG, "retrieved posts size + " +listPosts.size());
+
             }
         });
     }
@@ -134,7 +150,7 @@ public class ProfileFragment extends Fragment {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereLessThan(Post.KEY_CREATED_KEY,listPosts.get(listPosts.size()-1).getCreatedAt());
+        query.whereLessThan(Post.KEY_CREATED_KEY,posts.get(posts.size()-1).getCreatedAt());
         query.setLimit(5);
         query.addDescendingOrder(Post.KEY_CREATED_KEY);
         query.findInBackground(new FindCallback<Post>() {
@@ -144,7 +160,7 @@ public class ProfileFragment extends Fragment {
                     Log.e(TAG, "error with querying posts", e );
                     return;
                 }
-                listPosts.addAll(posts);
+                posts.addAll(posts);
                 adapter.notifyDataSetChanged();
                 Log.d(TAG, "retrieved posts ");
                 swipeContainer.setRefreshing(false);
