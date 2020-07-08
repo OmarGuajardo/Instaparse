@@ -49,6 +49,7 @@ public class ProfileFragment extends Fragment {
     protected SwipeRefreshLayout swipeContainer;
     protected EndlessRecyclerViewScrollListener scrollListener;
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    public ParseUser currentUser;
 
     protected ImageView ivProfilePictureDetails;
     File photoFile;
@@ -57,8 +58,8 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        currentUser = ParseUser.getCurrentUser();
         ivProfilePictureDetails = view.findViewById(R.id.ivProfilePictureDetails);
-
         ivProfilePictureDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,6 +67,10 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        Glide.with(getContext())
+                .load(currentUser.getParseFile("profilePicture").getUrl())
+                .circleCrop()
+                .into(ivProfilePictureDetails);
     }
 
     public ProfileFragment() {
@@ -134,21 +139,20 @@ public class ProfileFragment extends Fragment {
 
     //Will make a new object of Post and set the data accordingly
     //Then will save it to the DB
-    private void saveProfilePicture(ParseUser currentUser,File photoFile) {
+    private void saveProfilePicture(File photoFile) {
         //TODO: put picture received into a new Parse Class Profile Picture with a pointer to the current User
-        final ProfilePicture profilePicture = new ProfilePicture();
-        profilePicture.setProfilePicture(new ParseFile(photoFile));
-        profilePicture.setUser(ParseUser.getCurrentUser());
-        profilePicture.saveInBackground(new SaveCallback() {
+        currentUser.put("profilePicture",new ParseFile(photoFile));
+        currentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 Toast.makeText(getContext(), "Profile Picture Saved", Toast.LENGTH_SHORT).show();
                 Glide.with(getContext())
-                        .load(profilePicture.getProfilePicture().getUrl())
+                        .load(currentUser.getParseFile("profilePicture").getUrl())
                         .circleCrop()
                         .into(ivProfilePictureDetails);
             }
         });
+
     }
 
     //This methods calls and intent to launch the camera, take the picture and save the picture as a file that
@@ -199,16 +203,13 @@ public class ProfileFragment extends Fragment {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 Toast.makeText(getContext(), "Picture taken successfully", Toast.LENGTH_SHORT).show();
-
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
-                saveProfilePicture(ParseUser.getCurrentUser(),photoFile);
+                saveProfilePicture(photoFile);
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-//                Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
-
             }
         }
     }

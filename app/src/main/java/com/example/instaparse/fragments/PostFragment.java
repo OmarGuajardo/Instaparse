@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.instaparse.EndlessRecyclerViewScrollListener;
 import com.example.instaparse.Post;
@@ -23,6 +24,7 @@ import com.example.instaparse.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,6 +126,12 @@ public class PostFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 Log.d(TAG, "retrieved posts ");
                 swipeContainer.setRefreshing(false);
+
+//                //This is how to edit data
+//                Post reformattingPost = listPosts.get(0);
+//                reformattingPost.put("description","reformatting");
+//                reformattingPost.saveInBackground();
+
             }
         });
     }
