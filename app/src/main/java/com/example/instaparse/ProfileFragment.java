@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,32 +35,46 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
+    //Views
     public String TAG = "PostFragment";
     protected RecyclerView rvPosts;
     protected PostAdapter adapter;
-    public String photoFileName = "photo.jpg";
-
     protected List<Post> listPosts;
+    protected ImageView ivProfilePictureDetails;
+    protected TextView tvUserNameDetails;
+    protected RecyclerView rvProfilePics;
+    //Vars necessary for swiping actions
     protected SwipeRefreshLayout swipeContainer;
     protected EndlessRecyclerViewScrollListener scrollListener;
+    File photoFile;
+
+    //Vars necessary for picture taking
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    public String photoFileName = "photo.jpg";
     public ParseUser currentUser;
 
-    protected ImageView ivProfilePictureDetails;
-    File photoFile;
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //Setting the Global User
         currentUser = ParseUser.getCurrentUser();
+
+        //View Setting and Finding
         ivProfilePictureDetails = view.findViewById(R.id.ivProfilePictureDetails);
+        tvUserNameDetails = view.findViewById(R.id.tvUserNameDetails);
+        rvProfilePics = view.findViewById(R.id.rvProfilePics);
+        tvUserNameDetails.setText(currentUser.getUsername());
+
         ivProfilePictureDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

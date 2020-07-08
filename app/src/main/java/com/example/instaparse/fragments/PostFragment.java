@@ -48,6 +48,7 @@ public class PostFragment extends Fragment {
         adapter = new PostAdapter(listPosts,getContext());
         rvPosts.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
         rvPosts.setLayoutManager(linearLayoutManager);
         rvPosts.addItemDecoration(new DividerItemDecoration(rvPosts.getContext(), DividerItemDecoration.VERTICAL));
 

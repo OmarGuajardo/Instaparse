@@ -36,8 +36,11 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
 
-
         </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvProfilePics"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
