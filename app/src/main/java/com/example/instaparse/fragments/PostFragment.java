@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.instaparse.EndlessRecyclerViewScrollListener;
 import com.example.instaparse.Post;
 import com.example.instaparse.PostAdapter;
 import com.example.instaparse.R;
@@ -33,6 +34,9 @@ public class PostFragment extends Fragment {
     protected PostAdapter adapter;
     protected List<Post> listPosts;
     protected SwipeRefreshLayout swipeContainer;
+    protected EndlessRecyclerViewScrollListener scrollListener;
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -40,8 +44,20 @@ public class PostFragment extends Fragment {
         listPosts = new ArrayList<>();
         adapter = new PostAdapter(listPosts,getContext());
         rvPosts.setAdapter(adapter);
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rvPosts.setLayoutManager(linearLayoutManager);
         rvPosts.addItemDecoration(new DividerItemDecoration(rvPosts.getContext(), DividerItemDecoration.VERTICAL));
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                //TODO: Modify load more data to retrieve past posts
+                Log.d(TAG, "onLoadMore: loading....");
+                loadMoreData();
+            }
+        };
 
         swipeContainer = view.findViewById(R.id.swipeContainer);
         queryPosts();
@@ -62,6 +78,8 @@ public class PostFragment extends Fragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        rvPosts.addOnScrollListener(scrollListener);
 
     }
 
@@ -89,7 +107,7 @@ public class PostFragment extends Fragment {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.setLimit(20);
+        query.setLimit(5);
         query.addDescendingOrder(Post.KEY_CREATED_KEY);
         query.findInBackground(new FindCallback<Post>() {
             @Override
@@ -99,6 +117,27 @@ public class PostFragment extends Fragment {
                     return;
                 }
                 listPosts.clear();
+                listPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+                Log.d(TAG, "retrieved posts ");
+                swipeContainer.setRefreshing(false);
+            }
+        });
+    }
+    protected void loadMoreData() {
+        // Specify which class to query
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+        query.whereLessThan(Post.KEY_CREATED_KEY,listPosts.get(listPosts.size()-1).getCreatedAt());
+        query.setLimit(5);
+        query.addDescendingOrder(Post.KEY_CREATED_KEY);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "error with querying posts", e );
+                    return;
+                }
                 listPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
                 Log.d(TAG, "retrieved posts ");
