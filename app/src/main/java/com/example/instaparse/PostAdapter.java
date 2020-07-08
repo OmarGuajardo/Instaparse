@@ -3,6 +3,7 @@ package com.example.instaparse;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcel;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private List<Post> posts;
     private Context context;
+    public String TAG = "PosAdapter";
 
     public PostAdapter(List<Post> posts, Context context) {
         this.posts = posts;
@@ -78,9 +80,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvUserName.setText(post.getUser().getUsername());
             tvPostDescription.setText(post.getDescription());
             ParseFile image = post.getImage();
+            Log.d(TAG, "image normal + "+ image);
             if(image != null){
             Glide.with(context)
                     .load(post.getImage().getUrl())
+                    .centerCrop()
+                    .into(ivPostPicture);
+            }else{
+                    Glide.with(context)
+                    .load("https://wallpaperaccess.com/full/676563.jpg")
                     .centerCrop()
                     .into(ivPostPicture);
             }

@@ -13,6 +13,7 @@ import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.parse.ParseFile;
 
 import org.parceler.Parcels;
 
@@ -59,10 +60,13 @@ public class PostDetailActivity extends AppCompatActivity {
         //Populating fields
         tvUsername.setText(post.getUser().getUsername());
         tvPostDescription.setText(post.getDescription());
-        Glide.with(getApplicationContext())
-                .load(post.getImage().getUrl())
-                .centerCrop()
-                .into(ivPostPictureFeed);
+        ParseFile image = post.getImage();
+        if(image != null) {
+            Glide.with(getApplicationContext())
+                    .load(post.getImage().getUrl())
+                    .centerCrop()
+                    .into(ivPostPictureFeed);
+        }
         Date date = post.getCreatedAt();
         SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
         String stringDate = DateFor.format(date);
