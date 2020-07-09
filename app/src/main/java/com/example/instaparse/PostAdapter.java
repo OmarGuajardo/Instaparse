@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,12 +17,17 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,6 +71,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView tvTimeStamp;
         TextView tvLikesCounter;
         CardView cardView;
+        ImageButton btnLike;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +83,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             cardView = itemView.findViewById(R.id.cardView);
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
             tvLikesCounter = itemView.findViewById(R.id.tvLikesCounter);
+            btnLike = itemView.findViewById(R.id.btnLike);
         }
 
 
@@ -86,7 +95,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvUserName.setText(post.getUser().getUsername());
             tvPostDescription.setText(post.getDescription());
             tvTimeStamp.setText(stringDate);
-            tvLikesCounter.setText(post.getLikes().toString() + " Likes");
+            setValues(post);
+
+        }
+
+        public void setValues(final Post post){
+
+            final ArrayList<ParseUser> likeList = (ArrayList<ParseUser>)post.get("likeList");
+            tvLikesCounter.setText(String.valueOf(likeList.size()) + " Likes");
+            if(likeList.size() > 0){
+                if(isInList(likeList) > -1){
+                    btnLike.setSelected(true);
+                }
+            }else {
+            btnLike.setSelected(false);
+            }
 
             if (post.getUser().getParseFile("profilePicture") != null) {
                 Glide.with(context)
@@ -97,8 +120,32 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 ivProfilePicture.setImageResource(R.drawable.ic_baseline_person_24);
 
             }
+            btnLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int index = isInList(likeList);
+                    if(index > - 1){
+                        likeList.remove(index);
+                        post.put("likeList",likeList);
+                        btnLike.setSelected(false);
+                    }
+                    else{
+
+                        likeList.add(ParseUser.getCurrentUser());
+                        post.add("likeList",ParseUser.getCurrentUser());
+                        btnLike.setSelected(true);
+
+                    }
+                    post.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                        tvLikesCounter.setText(String.valueOf(likeList.size()) + " Likes");
+                        }
+                    });
+                }
+            });
+
             ParseFile image = post.getImage();
-            Log.d(TAG, "image normal + " + image);
             if (image != null) {
                 Glide.with(context)
                         .load(post.getImage().getUrl())
@@ -128,7 +175,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     context.startActivity(i);
                 }
             });
-
         }
+
+        public int isInList(ArrayList<ParseUser> likeList){
+            for(ParseUser user: likeList){
+                if(user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
+                    Log.d(TAG, "isInList: ");
+                    return likeList.indexOf(user);
+                }
+            }
+            return -1;
+        }
+
     }
 }

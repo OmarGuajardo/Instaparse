@@ -56,7 +56,6 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <LinearLayout
-                android:layout_marginLeft="@dimen/marginLeft"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -65,24 +64,24 @@
 
                 <ImageButton
                     android:id="@+id/btnLike"
-
+                    android:backgroundTint="@android:color/white"
+                    android:src="@drawable/state_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/marginRigt"
-                    android:background="@drawable/ufi_heart" />
+                     />
 
                 <ImageButton
                     android:id="@+id/btnComment"
-
+                    android:backgroundTint="@android:color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/marginRigt"
-                    android:background="@drawable/ufi_comment" />
+                    android:src="@drawable/ufi_comment" />
 
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/nav_inbox_paper_plane" />
+                    android:backgroundTint="@android:color/white"
+                    android:src="@drawable/nav_inbox_paper_plane" />
             </LinearLayout>
             <TextView
                 android:id="@+id/tvLikesCounter"

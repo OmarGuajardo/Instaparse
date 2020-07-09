@@ -22,6 +22,7 @@ import com.example.instaparse.Post;
 import com.example.instaparse.PostAdapter;
 import com.example.instaparse.R;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -128,8 +129,31 @@ public class PostFragment extends Fragment {
                 Log.d(TAG, "retrieved posts ");
                 swipeContainer.setRefreshing(false);
 
+//                Post testPost = posts.get(0);
+//                testPost.add("likeList",ParseUser.getCurrentUser());
+//                testPost.saveInBackground();
+////                testPost.add("likeList",posts.get(1).getUser());
+////                testPost.saveInBackground();
+//                ArrayList<ParseUser> userLikes = (ArrayList<ParseUser>)testPost.get("likeList");
+//
+//               for(ParseUser user: userLikes){
+//                   String objID = user.getObjectId();
+//                   String currentUserObjId = ParseUser.getCurrentUser().getObjectId();
+//                   Log.d(TAG, "objID " + objID);
+//                   Log.d(TAG, "currentUserObjID  " + currentUserObjId);
+//                   if(objID.equals(ParseUser.getCurrentUser().getObjectId())){
+//                       userLikes.remove(user);
+//                       Log.d(TAG, "removed ");
+//                       break;
+//                   }
+//               }
+//               testPost.put("likeList",userLikes);
+//               testPost.saveInBackground();
+
+
             }
         });
+
     }
     protected void loadMoreData() {
         // Specify which class to query
