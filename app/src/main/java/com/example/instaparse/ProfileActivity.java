@@ -2,7 +2,6 @@ package com.example.instaparse;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,10 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.instaparse.databinding.ActivityProfileBinding;
+import com.example.instaparse.models.Post;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.parse.FindCallback;
-import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;

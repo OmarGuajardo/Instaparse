@@ -16,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.instaparse.EndlessRecyclerViewScrollListener;
-import com.example.instaparse.Post;
+import com.example.instaparse.models.Comment;
+import com.example.instaparse.models.Post;
 import com.example.instaparse.PostAdapter;
 import com.example.instaparse.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,6 @@ public class PostFragment extends Fragment {
 
         rvPosts.setLayoutManager(linearLayoutManager);
         rvPosts.addItemDecoration(new DividerItemDecoration(rvPosts.getContext(), DividerItemDecoration.VERTICAL));
-
 
 
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {

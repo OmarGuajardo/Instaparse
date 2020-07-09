@@ -2,19 +2,22 @@ package com.example.instaparse;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.os.Parcel;
+import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import com.example.instaparse.fragments.PostFragment;
+import com.example.instaparse.models.Comment;
+import com.example.instaparse.models.Post;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -26,6 +29,7 @@ import org.parceler.Parcels;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PostDetailActivity extends AppCompatActivity {
 
@@ -40,7 +44,9 @@ public class PostDetailActivity extends AppCompatActivity {
     TextView tvPostDescription;
     TextView tvTimeStamp;
     ImageView ivProfilePicture;
-
+    CommentsAdapter adapter;
+    RecyclerView rvComments;
+    List<Comment>comments;
 
 
 
@@ -69,6 +75,21 @@ public class PostDetailActivity extends AppCompatActivity {
         //Unpacking the Extras
         post = Parcels.unwrap(getIntent().getParcelableExtra("postSelected"));
         setValues();
+
+        //Setting up the recycler view
+        comments = post.getCommentList();
+        Log.d(TAG, "onCreate: comments size " + comments.size());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        adapter = new CommentsAdapter(comments,getApplicationContext());
+        rvComments = findViewById(R.id.rvComments);
+        rvComments.setLayoutManager(linearLayoutManager);
+        rvComments.setAdapter(adapter);
+
+
+
+
+
+
 
     }
     @Override

@@ -1,4 +1,4 @@
-package com.example.instaparse;
+package com.example.instaparse.models;
 
 import android.text.format.DateUtils;
 
@@ -11,6 +11,7 @@ import org.parceler.Parcel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 @ParseClassName("POST")
@@ -24,7 +25,7 @@ public class Post extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
     public static final String KEY_CREATED_KEY = "createdAt";
-    public static final String KEY_LIKES = "Likes";
+    public static final String KEY_COMMENT_LIST = "commentList";
 
     public String getDescription(){
         return getString(KEY_DESCRIPTION);
@@ -46,8 +47,11 @@ public class Post extends ParseObject {
         put(KEY_USER,user);
     }
 
-    public Integer getLikes(){
-        return getInt("Likes");
+    public ArrayList<Comment> getCommentList(){
+        return (ArrayList<Comment>)get(KEY_COMMENT_LIST);
+    }
+    public void setComment(Comment comment){
+        add(KEY_COMMENT_LIST,comment);
     }
 
 
