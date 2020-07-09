@@ -31,6 +31,8 @@ public class PostDetailActivity extends AppCompatActivity {
     ImageButton btnComment;
     TextView tvPostDescription;
     TextView tvTimeStamp;
+    ImageView ivProfilePicture;
+
 
 
 
@@ -48,6 +50,8 @@ public class PostDetailActivity extends AppCompatActivity {
         //Hooking up all the Views
         tvUsername = findViewById(R.id.tvUserName);
         ivPostPictureFeed = findViewById(R.id.ivPostPictureFeed);
+        ivProfilePicture = findViewById(R.id.ivProfilePicture);
+
         tvLikesCounter = findViewById(R.id.tvLikesCounter);
         btnLike = findViewById(R.id.btnLike);
         btnComment = findViewById(R.id.btnComment);
@@ -67,10 +71,18 @@ public class PostDetailActivity extends AppCompatActivity {
                     .centerCrop()
                     .into(ivPostPictureFeed);
         }
+
+        if(post.getUser().getParseFile("profilePicture") != null){
+            Glide.with(getApplicationContext())
+                    .load(post.getUser().getParseFile("profilePicture").getUrl())
+                    .circleCrop()
+                    .into(ivProfilePicture);
+        }
         Date date = post.getCreatedAt();
         SimpleDateFormat DateFor = new SimpleDateFormat("dd MMMM yyyy");
         String stringDate = DateFor.format(date);
         tvTimeStamp.setText(stringDate);
+        tvLikesCounter.setText(post.getLikes().toString() + " Likes");
 
     }
     @Override

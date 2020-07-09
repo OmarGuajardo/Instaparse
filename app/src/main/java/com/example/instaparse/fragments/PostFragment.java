@@ -128,11 +128,6 @@ public class PostFragment extends Fragment {
                 Log.d(TAG, "retrieved posts ");
                 swipeContainer.setRefreshing(false);
 
-//                //This is how to edit data
-//                Post reformattingPost = listPosts.get(0);
-//                reformattingPost.put("description","reformatting");
-//                reformattingPost.saveInBackground();
-
             }
         });
     }

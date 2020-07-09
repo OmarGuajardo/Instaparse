@@ -29,7 +29,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private List<Post> posts;
     private Context context;
-    public String TAG = "PosAdapter";
+    public String TAG = "PostAdapter";
 
     public PostAdapter(List<Post> posts, Context context) {
         this.posts = posts;
@@ -39,7 +39,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_post,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_post, parent, false);
         return new ViewHolder(view);
     }
 
@@ -57,20 +57,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public PostAdapter() {
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvUserName;
         ImageView ivPostPicture;
+        ImageView ivProfilePicture;
         TextView tvPostDescription;
         TextView tvTimeStamp;
+        TextView tvLikesCounter;
         CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUserName = itemView.findViewById(R.id.tvUserName);
             ivPostPicture = itemView.findViewById(R.id.ivPostPictureFeed);
+            ivProfilePicture = itemView.findViewById(R.id.ivProfilePicture);
             tvPostDescription = itemView.findViewById(R.id.tvPostDescription);
             cardView = itemView.findViewById(R.id.cardView);
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
+            tvLikesCounter = itemView.findViewById(R.id.tvLikesCounter);
         }
 
 
@@ -82,25 +86,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvUserName.setText(post.getUser().getUsername());
             tvPostDescription.setText(post.getDescription());
             tvTimeStamp.setText(stringDate);
+            tvLikesCounter.setText(post.getLikes().toString() + " Likes");
 
+            if (post.getUser().getParseFile("profilePicture") != null) {
+                Glide.with(context)
+                        .load(post.getUser().getParseFile("profilePicture").getUrl())
+                        .circleCrop()
+                        .into(ivProfilePicture);
+            } else {
+                ivProfilePicture.setImageResource(R.drawable.ic_baseline_person_24);
+
+            }
             ParseFile image = post.getImage();
-            Log.d(TAG, "image normal + "+ image);
-            if(image != null){
-            Glide.with(context)
-                    .load(post.getImage().getUrl())
-                    .centerCrop()
-                    .into(ivPostPicture);
-            }else{
-                    Glide.with(context)
-                    .load("https://wallpaperaccess.com/full/676563.jpg")
-                    .centerCrop()
-                    .into(ivPostPicture);
+            Log.d(TAG, "image normal + " + image);
+            if (image != null) {
+                Glide.with(context)
+                        .load(post.getImage().getUrl())
+                        .centerCrop()
+                        .into(ivPostPicture);
+            } else {
+                Glide.with(context)
+                        .load("https://wallpaperaccess.com/full/676563.jpg")
+                        .centerCrop()
+                        .into(ivPostPicture);
             }
 
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(context,PostDetailActivity.class);
+                    Intent i = new Intent(context, PostDetailActivity.class);
                     i.putExtra("postSelected", Parcels.wrap(post));
                     context.startActivity(i);
                 }
@@ -109,7 +123,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             tvUserName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent i = new Intent(context,ProfileActivity.class);
+                    Intent i = new Intent(context, ProfileActivity.class);
                     i.putExtra("userSelected", Parcels.wrap(post.getUser()));
                     context.startActivity(i);
                 }
