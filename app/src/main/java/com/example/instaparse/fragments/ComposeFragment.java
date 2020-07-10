@@ -133,11 +133,7 @@ public class ComposeFragment extends Fragment {
         // required for API >= 24
         // See https://guides.codepath.com/android/Sharing-Content-with-Intents#sharing-files-with-api-24-or-higher
         Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
-        Log.d(TAG, "fileProvider " + fileProvider);
-
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-        Log.d(TAG, "packagemanager " + intent.resolveActivity(getContext().getPackageManager()));
-
         // If you call startActivityForResult() using an intent that no app can handle, your app will crash.
         // So as long as the result is not null, it's safe to use the intent.
         if (intent.resolveActivity(getContext().getPackageManager()) != null) {
@@ -177,7 +173,6 @@ public class ComposeFragment extends Fragment {
                     Log.e(TAG, "Something when wrong when postin ",e );
                     return;
                 }
-                Log.d(TAG, "Post Saved succesful");
                 etDescription.setText("");
                 ivPostPicture.setImageResource(0);
                 Toast.makeText(getContext(), "Picture Posted!", Toast.LENGTH_SHORT).show();

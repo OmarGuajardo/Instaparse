@@ -140,8 +140,6 @@ public class ProfileFragment extends Fragment {
                 posts.clear();
                 posts.addAll(listPosts);
                 adapter.notifyDataSetChanged();
-                Log.d(TAG, "retrieved posts size + " +listPosts.size());
-
             }
         });
     }

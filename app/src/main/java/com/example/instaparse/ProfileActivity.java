@@ -61,7 +61,7 @@ public class ProfileActivity extends AppCompatActivity {
         tvUserNameDetails.setText(user.getUsername());
         posts = new ArrayList<>();
 
-        if(user.getParseFile("profilePicture") != null){
+        if (user.getParseFile("profilePicture") != null) {
             Glide.with(getApplicationContext())
                     .load(user.getParseFile("profilePicture").getUrl())
 
@@ -70,11 +70,10 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         //Recycler View set up
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),3);
-        adapter = new ProfileAdapter(getApplicationContext(),posts);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
+        adapter = new ProfileAdapter(getApplicationContext(), posts);
         rvProfilePics.setLayoutManager(gridLayoutManager);
         rvProfilePics.setAdapter(adapter);
-
 
 
         //Get User Posts
@@ -85,23 +84,23 @@ public class ProfileActivity extends AppCompatActivity {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereEqualTo(Post.KEY_USER,user);
+        query.whereEqualTo(Post.KEY_USER, user);
         query.addDescendingOrder(Post.KEY_CREATED_KEY);
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> listPosts, ParseException e) {
-                if(e != null){
-                    Log.e(TAG, "error with querying posts", e );
+                if (e != null) {
+                    Log.e(TAG, "error with querying posts", e);
                     return;
                 }
                 posts.clear();
                 posts.addAll(listPosts);
                 adapter.notifyDataSetChanged();
-                Log.d(TAG, "retrieved posts size + " +listPosts.size());
 
             }
         });
     }
+
     //When user hits the back button we simply finish the intent
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

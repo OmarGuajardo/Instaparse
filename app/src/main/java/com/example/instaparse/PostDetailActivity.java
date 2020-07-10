@@ -184,7 +184,6 @@ public class PostDetailActivity extends AppCompatActivity implements CommentDial
     public int isInList(ArrayList<ParseUser> likeList){
         for(ParseUser user: likeList){
             if(user.getObjectId().equals(ParseUser.getCurrentUser().getObjectId())){
-                Log.d(TAG, "isInList: ");
                 return likeList.indexOf(user);
             }
         }

@@ -42,13 +42,12 @@ public class PostFragment extends Fragment {
     protected EndlessRecyclerViewScrollListener scrollListener;
 
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvPosts = view.findViewById(R.id.rvPost);
         listPosts = new ArrayList<>();
-        adapter = new PostAdapter(listPosts,getContext());
+        adapter = new PostAdapter(listPosts, getContext());
         rvPosts.setAdapter(adapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
 
@@ -61,8 +60,6 @@ public class PostFragment extends Fragment {
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                //TODO: Modify load more data to retrieve past posts
-                Log.d(TAG, "onLoadMore: loading....");
                 loadMoreData();
             }
         };
@@ -126,59 +123,40 @@ public class PostFragment extends Fragment {
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
-                if(e != null){
-                    Log.e(TAG, "error with querying posts", e );
+                if (e != null) {
+                    Log.e(TAG, "error with querying posts", e);
                     return;
                 }
                 listPosts.clear();
                 listPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
-                Log.d(TAG, "retrieved posts ");
                 swipeContainer.setRefreshing(false);
             }
         });
 
     }
+
     protected void loadMoreData() {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
-        query.whereLessThan(Post.KEY_CREATED_KEY,listPosts.get(listPosts.size()-1).getCreatedAt());
+        query.whereLessThan(Post.KEY_CREATED_KEY, listPosts.get(listPosts.size() - 1).getCreatedAt());
         query.setLimit(5);
         query.addDescendingOrder(Post.KEY_CREATED_KEY);
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
-                if(e != null){
-                    Log.e(TAG, "error with querying posts", e );
+                if (e != null) {
+                    Log.e(TAG, "error with querying posts", e);
                     return;
                 }
                 listPosts.addAll(posts);
                 adapter.notifyDataSetChanged();
-                Log.d(TAG, "retrieved posts ");
                 swipeContainer.setRefreshing(false);
             }
         });
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, ";ALKSDFJAL;SDKJFA;LSKDJFAS;LDKFJASDFS");
-
-//        Log.d(TAG, "onActivityResult: ");
-//        final int position = data.getExtras().getInt("position");
-//        listPosts.get(position).fetchInBackground(new GetCallback<Post>() {
-//            @Override
-//            public void done(Post object, ParseException e) {
-//                Log.d(TAG, "done: pos "+ position);
-//                Log.d(TAG, "done: obj "+object.getDescription());
-//                listPosts.set(position,object);
-//                adapter.notifyDataSetChanged();
-//
-//            }
-//        });
-    }
-
 }
+
