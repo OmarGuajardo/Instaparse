@@ -167,9 +167,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 public void onClick(View view) {
                     Intent i = new Intent(context, PostDetailActivity.class);
                     i.putExtra("postSelected", Parcels.wrap(post));
-                    i.putExtra("position",getAdapterPosition());
-                    ((Activity)context).startActivityForResult(i,20);
-//                    context.startActivity(i);
+                    context.startActivity(i);
                 }
             });
 

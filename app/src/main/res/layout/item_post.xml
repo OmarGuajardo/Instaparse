@@ -104,7 +104,7 @@
                 tools:text="Omg I just posted a picture on Parse and it's so called that it is Node based, even though I'm not to on what Node.js actually means but it's still pretty cool" />
             <TextView
                 android:layout_marginTop="8dp"
-                tools:text="41 Likes"
+                tools:text="20 min ago"
                 android:layout_marginLeft="@dimen/marginLeft"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

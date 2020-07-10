@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -142,6 +143,18 @@ public class PostDetailActivity extends AppCompatActivity implements CommentDial
                 openDialog();
             }
         });
+
+        //On Click Listener for Profile
+        tvUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+                i.putExtra("userSelected", Parcels.wrap(post.getUser()));
+
+                startActivity(i);
+            }
+        });
+
         //Populating fields
         try {
             tvUsername.setText(post.getUser().fetchIfNeeded().getUsername());

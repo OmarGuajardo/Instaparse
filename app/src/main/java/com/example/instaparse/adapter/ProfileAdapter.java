@@ -1,6 +1,7 @@
 package com.example.instaparse.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.instaparse.PostDetailActivity;
 import com.example.instaparse.R;
 import com.example.instaparse.models.Post;
 import com.parse.ParseFile;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -51,13 +55,14 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             ivItemPostProfile = itemView.findViewById(R.id.ivItemPostProfile);
         }
 
-        public void bind(Post post) {
+        public void bind(final Post post) {
             ParseFile image = post.getImage();
             if(image != null) {
                 Glide.with(context)
                         .load(post.getImage().getUrl())
                         .centerCrop()
                         .into(ivItemPostProfile);
+
                 return;
             }
             Glide.with(context)

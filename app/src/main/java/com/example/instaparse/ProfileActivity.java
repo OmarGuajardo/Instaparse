@@ -75,6 +75,8 @@ public class ProfileActivity extends AppCompatActivity {
         rvProfilePics.setLayoutManager(gridLayoutManager);
         rvProfilePics.setAdapter(adapter);
 
+
+
         //Get User Posts
         queryPosts();
     }

@@ -144,27 +144,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    protected void loadMoreData() {
-        // Specify which class to query
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        query.whereLessThan(Post.KEY_CREATED_KEY,posts.get(posts.size()-1).getCreatedAt());
-        query.setLimit(5);
-        query.addDescendingOrder(Post.KEY_CREATED_KEY);
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if(e != null){
-                    Log.e(TAG, "error with querying posts", e );
-                    return;
-                }
-                posts.addAll(posts);
-                adapter.notifyDataSetChanged();
-                Log.d(TAG, "retrieved posts ");
-                swipeContainer.setRefreshing(false);
-            }
-        });
-    }
+
 
     //Will make a new object of Post and set the data accordingly
     //Then will save it to the DB
