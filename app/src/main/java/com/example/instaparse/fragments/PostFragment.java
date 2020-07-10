@@ -42,6 +42,7 @@ public class PostFragment extends Fragment {
     protected EndlessRecyclerViewScrollListener scrollListener;
 
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -96,8 +97,9 @@ public class PostFragment extends Fragment {
 
     @Override
     public void onStart() {
-        queryPosts();
         super.onStart();
+        queryPosts();
+        rvPosts.addOnScrollListener(scrollListener);
     }
 
     @Override

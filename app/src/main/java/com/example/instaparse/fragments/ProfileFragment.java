@@ -76,6 +76,8 @@ public class ProfileFragment extends Fragment {
         rvProfilePics = view.findViewById(R.id.rvProfilePics);
         tvUserNameDetails.setText(currentUser.getUsername());
         posts = new ArrayList<>();
+        TextView tvBio = view.findViewById(R.id.tvBio);
+        tvBio.setText("Hi welcome to my page \uD83D\uDC2A\uD83E\uDD5F\uD83C\uDF71☺\uD83D\uDE02");
 
         //RecyclerView Setup
         adapter = new ProfileAdapter(getContext(),posts);
