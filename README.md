@@ -46,9 +46,9 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/q3hONNn4UwM/0.jpg)](https://www.youtube.com/watch?v=q3hONNn4UwM)
+![](MasterDemo.gif)
 
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
+GIF created with [img2.dom](https://www.img2go.com/).
 
 ## Credits
 
