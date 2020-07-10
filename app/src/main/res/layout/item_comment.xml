@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:textColor="@color/colorBlue"
             android:id="@+id/tvCommentUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,6 +26,7 @@
             tools:text="omar_gdog" />
 
         <TextView
+            android:textColor="@android:color/black"
             android:id="@+id/tvCommentBody"
             android:layout_width="wrap_content"
             android:layout_marginLeft="8dp"

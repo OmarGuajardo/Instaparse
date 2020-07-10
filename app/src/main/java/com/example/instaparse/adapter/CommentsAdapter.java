@@ -69,7 +69,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             Log.d(TAG, "binding " + comment.getDescription());
             tvCommentBody.setText(comment.getDescription());
 
-            tvCommentUser.setText(comment.getUser().getUsername());
+            tvCommentUser.setText("@"+comment.getUser().getUsername());
             tvCommentUser.setPaintFlags(tvCommentUser.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
     }

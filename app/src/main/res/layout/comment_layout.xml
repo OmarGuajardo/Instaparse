@@ -16,17 +16,17 @@
             android:id="@+id/etComposeBodyContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/colorBlue"
 
             android:outlineProvider="none"
-            android:textColorHint="@color/colorAccent"
-            app:boxStrokeColor="@color/colorAccent"
+            android:textColorHint="@color/colorBlue"
+            app:boxStrokeColor="@color/colorBlue"
             app:counterEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:counterMaxLength="280"
-            app:endIconTint="@color/colorAccent"
-            app:hintTextColor="@color/colorAccent"
-            app:startIconTint="@color/colorAccent">
+            app:endIconTint="@color/colorBlue"
+            app:hintTextColor="@color/colorBlue"
+            app:startIconTint="@color/colorBlue">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etComposeBody"
@@ -36,7 +36,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Add a Comment"
                 android:inputType="textCapSentences|textMultiLine"
-                android:maxLength="280"
                 android:selectAllOnFocus="false"
                 android:singleLine="false"
                 android:textSize="20sp" />
@@ -48,7 +47,7 @@
             style="?attr/elevation"
             android:id="@+id/btnTweet"
             android:layout_gravity="right"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorBlue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Comment" />

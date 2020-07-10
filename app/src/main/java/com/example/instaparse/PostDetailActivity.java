@@ -49,6 +49,7 @@ public class PostDetailActivity extends AppCompatActivity implements CommentDial
     RecyclerView rvComments;
     List<Comment>comments;
     CommentDialog commentDialog;
+    TextView tvCommentHeader;
 
 
 
@@ -73,6 +74,7 @@ public class PostDetailActivity extends AppCompatActivity implements CommentDial
         btnComment = findViewById(R.id.btnComment);
         tvPostDescription = findViewById(R.id.tvPostDescription);
         tvTimeStamp = findViewById(R.id.tvTimeStamp);
+        tvCommentHeader = findViewById(R.id.tvCommentHeader);
 
         //Unpacking the Extras
         post = Parcels.unwrap(getIntent().getParcelableExtra("postSelected"));
@@ -89,6 +91,10 @@ public class PostDetailActivity extends AppCompatActivity implements CommentDial
         adapter.notifyDataSetChanged();
 
 
+        if(comments.isEmpty()){
+
+            tvCommentHeader.setVisibility(View.GONE);
+        }
 
 
     }
@@ -216,5 +222,6 @@ public class PostDetailActivity extends AppCompatActivity implements CommentDial
         adapter.notifyDataSetChanged();
         //Dismissing the dialog box
         commentDialog.dismiss();
+        tvCommentHeader.setVisibility(View.VISIBLE);
     }
 }

@@ -11,12 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.instaparse.PostDetailActivity;
 import com.example.instaparse.R;
 import com.example.instaparse.models.Post;
 import com.parse.ParseFile;
 
-import org.parceler.Parcels;
 
 import java.util.List;
 
