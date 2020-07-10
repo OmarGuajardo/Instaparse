@@ -15,15 +15,15 @@ public class Comment extends ParseObject {
     public void setDescription(String description){
         put(KEY_DESCRIPTION,description);
     }
-    public String getDescription() {
-        return getString(KEY_DESCRIPTION);
+    public String getDescription() throws ParseException{
+        return fetchIfNeeded().getString(KEY_DESCRIPTION);
     }
     public void setUser(ParseUser user){
         put(KEY_USER,user);
     }
 
-    public ParseUser getUser(){
-        return getParseUser(KEY_USER);
+    public ParseUser getUser() throws ParseException {
+        return fetchIfNeeded().getParseUser(KEY_USER);
     }
     public void setPost(Post post){
         put(KEY_POST,post);

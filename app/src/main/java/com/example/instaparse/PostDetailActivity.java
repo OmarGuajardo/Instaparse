@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PostDetailActivity extends AppCompatActivity {
+public class PostDetailActivity extends AppCompatActivity implements CommentDialog.onSubmitListener {
 
     private static final String TAG = "PostDetailsActivity";
     MaterialToolbar toolbar;
@@ -47,6 +47,7 @@ public class PostDetailActivity extends AppCompatActivity {
     CommentsAdapter adapter;
     RecyclerView rvComments;
     List<Comment>comments;
+    CommentDialog commentDialog;
 
 
 
@@ -86,7 +87,16 @@ public class PostDetailActivity extends AppCompatActivity {
         rvComments.setAdapter(adapter);
 
 
-
+//        Comment newComment = new Comment();
+//        newComment.setUser(ParseUser.getCurrentUser());
+//        newComment.setPost(post);
+//        newComment.setDescription("is the rv working?");
+//        newComment.saveInBackground();
+//        post.setComment(newComment);
+//        post.saveInBackground();
+//        comments.clear();
+//        comments.addAll(post.getCommentList());
+//        adapter.notifyDataSetChanged();
 
 
 
@@ -134,6 +144,14 @@ public class PostDetailActivity extends AppCompatActivity {
                 });
             }
         });
+
+        //On Click Listener for btn Comment
+        btnComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openDialog();
+            }
+        });
         //Populating fields
         try {
             tvUsername.setText(post.getUser().fetchIfNeeded().getUsername());
@@ -168,5 +186,33 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         }
         return -1;
+    }
+    //This dialog method will be called by the compose feature and WON'T pass
+    //any recipients to the dialog
+    public void openDialog() {
+        //Creating an opening a new Dialog
+        commentDialog = new CommentDialog();
+        commentDialog.show(getSupportFragmentManager(), "Compose Dialog");
+
+    }
+
+    @Override
+    public void submitComment(String body) {
+        //Making a new Comment
+        Comment newComment = new Comment();
+        newComment.setDescription(body);
+        newComment.setPost(post);
+        newComment.setUser(ParseUser.getCurrentUser());
+        newComment.saveInBackground();
+        //Setting the comment into the list of comments for the post
+        post.setComment(newComment);
+        //Saving the data
+        post.saveInBackground();
+        //Refreshing the data
+        comments.clear();
+        comments.addAll(post.getCommentList());
+        adapter.notifyDataSetChanged();
+        //Dismissing the dialog box
+        commentDialog.dismiss();
     }
 }
