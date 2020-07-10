@@ -1,4 +1,4 @@
-package com.example.instaparse;
+package com.example.instaparse.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,8 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.instaparse.R;
 import com.example.instaparse.models.Comment;
-import com.example.instaparse.models.Post;
 import com.parse.ParseException;
 
 import java.util.List;

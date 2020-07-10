@@ -1,6 +1,5 @@
 package com.example.instaparse.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,15 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.instaparse.EndlessRecyclerViewScrollListener;
-import com.example.instaparse.models.Comment;
 import com.example.instaparse.models.Post;
-import com.example.instaparse.PostAdapter;
+import com.example.instaparse.adapter.PostAdapter;
 import com.example.instaparse.R;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -154,5 +154,24 @@ public class PostFragment extends Fragment {
         });
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, ";ALKSDFJAL;SDKJFA;LSKDJFAS;LDKFJASDFS");
+
+//        Log.d(TAG, "onActivityResult: ");
+//        final int position = data.getExtras().getInt("position");
+//        listPosts.get(position).fetchInBackground(new GetCallback<Post>() {
+//            @Override
+//            public void done(Post object, ParseException e) {
+//                Log.d(TAG, "done: pos "+ position);
+//                Log.d(TAG, "done: obj "+object.getDescription());
+//                listPosts.set(position,object);
+//                adapter.notifyDataSetChanged();
+//
+//            }
+//        });
+    }
 
 }

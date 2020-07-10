@@ -1,4 +1,4 @@
-package com.example.instaparse;
+package com.example.instaparse.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,10 +13,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.instaparse.fragments.PostFragment;
+import com.example.instaparse.PostDetailActivity;
+import com.example.instaparse.ProfileActivity;
+import com.example.instaparse.R;
 import com.example.instaparse.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -164,7 +167,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 public void onClick(View view) {
                     Intent i = new Intent(context, PostDetailActivity.class);
                     i.putExtra("postSelected", Parcels.wrap(post));
-                    context.startActivity(i);
+                    i.putExtra("position",getAdapterPosition());
+                    ((Activity)context).startActivityForResult(i,20);
+//                    context.startActivity(i);
                 }
             });
 
@@ -173,7 +178,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 public void onClick(View view) {
                     Intent i = new Intent(context, ProfileActivity.class);
                     i.putExtra("userSelected", Parcels.wrap(post.getUser()));
+
                     context.startActivity(i);
+
                 }
             });
         }

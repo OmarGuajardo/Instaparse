@@ -5,25 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.instaparse.adapter.CommentsAdapter;
 import com.example.instaparse.models.Comment;
 import com.example.instaparse.models.Post;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -82,24 +78,14 @@ public class PostDetailActivity extends AppCompatActivity implements CommentDial
         setValues();
 
         //Setting up the recycler view
-        comments = post.getCommentList();
-        Log.d(TAG, "onCreate: comments size " + comments.size());
+        comments = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        adapter = new CommentsAdapter(comments,getApplicationContext());
+        adapter = new CommentsAdapter(comments,PostDetailActivity.this);
         rvComments = findViewById(R.id.rvComments);
         rvComments.setLayoutManager(linearLayoutManager);
         rvComments.setAdapter(adapter);
+        comments.addAll(post.getCommentList());
         adapter.notifyDataSetChanged();
-//        Comment newComment = new Comment();
-//        newComment.setUser(ParseUser.getCurrentUser());
-//        newComment.setPost(post);
-//        newComment.setDescription("is the rv working?");
-//        newComment.saveInBackground();
-//        post.setComment(newComment);
-//        post.saveInBackground();
-//        comments.clear();
-//        comments.addAll(post.getCommentList());
-//        adapter.notifyDataSetChanged();
 
 
 

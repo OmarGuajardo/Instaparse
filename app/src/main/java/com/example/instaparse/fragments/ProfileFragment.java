@@ -1,4 +1,4 @@
-package com.example.instaparse;
+package com.example.instaparse.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +25,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.instaparse.EndlessRecyclerViewScrollListener;
+import com.example.instaparse.adapter.ProfileAdapter;
+import com.example.instaparse.R;
 import com.example.instaparse.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;

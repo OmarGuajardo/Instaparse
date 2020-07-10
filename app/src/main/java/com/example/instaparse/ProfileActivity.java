@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.instaparse.adapter.ProfileAdapter;
 import com.example.instaparse.models.Post;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.parse.FindCallback;
