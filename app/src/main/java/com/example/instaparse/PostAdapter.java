@@ -1,5 +1,6 @@
 package com.example.instaparse;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -15,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.instaparse.fragments.PostFragment;
 import com.example.instaparse.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -33,6 +35,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private List<Post> posts;
     private Context context;
     public String TAG = "PostAdapter";
+    public int KEY_REQUEST_CODE = 42;
+
 
     public PostAdapter(List<Post> posts, Context context) {
         this.posts = posts;

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.util.Log;
@@ -21,6 +22,8 @@ import com.example.instaparse.models.Post;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -34,6 +37,7 @@ import java.util.List;
 public class PostDetailActivity extends AppCompatActivity implements CommentDialog.onSubmitListener {
 
     private static final String TAG = "PostDetailsActivity";
+
     MaterialToolbar toolbar;
     Post post;
     TextView tvUsername;
@@ -85,8 +89,7 @@ public class PostDetailActivity extends AppCompatActivity implements CommentDial
         rvComments = findViewById(R.id.rvComments);
         rvComments.setLayoutManager(linearLayoutManager);
         rvComments.setAdapter(adapter);
-
-
+        adapter.notifyDataSetChanged();
 //        Comment newComment = new Comment();
 //        newComment.setUser(ParseUser.getCurrentUser());
 //        newComment.setPost(post);
@@ -104,6 +107,7 @@ public class PostDetailActivity extends AppCompatActivity implements CommentDial
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
         finish();
         return super.onOptionsItemSelected(item);
     }

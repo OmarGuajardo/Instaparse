@@ -15,7 +15,7 @@ public class Comment extends ParseObject {
     public void setDescription(String description){
         put(KEY_DESCRIPTION,description);
     }
-    public String getDescription() throws ParseException{
+    public String getDescription() throws ParseException {
         return fetchIfNeeded().getString(KEY_DESCRIPTION);
     }
     public void setUser(ParseUser user){
@@ -23,14 +23,16 @@ public class Comment extends ParseObject {
     }
 
     public ParseUser getUser() throws ParseException {
-        return fetchIfNeeded().getParseUser(KEY_USER);
+        return getParseUser(KEY_USER).fetchIfNeeded();
     }
     public void setPost(Post post){
         put(KEY_POST,post);
     }
 
-    public ParseObject getPost(){
-        return getParseObject(KEY_POST);
+    public ParseObject getPost() throws ParseException {
+
+        return getParseObject(KEY_POST).fetchIfNeeded();
+//        return getParseObject(KEY_POST);
     }
 
 }

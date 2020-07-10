@@ -19,6 +19,7 @@ import java.util.List;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
 
+    public String TAG = "CommentsAdapter";
     List<Comment> comments;
     Context context;
 
@@ -37,12 +38,14 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Comment comment = comments.get(position);
+        Comment newComment = comments.get(position);
         try {
-            holder.bind(comment);
+            holder.bind(newComment);
         } catch (ParseException e) {
             e.printStackTrace();
+            Log.d(TAG, "onBindViewHolder: ",e);
         }
+
 
     }
 
@@ -62,8 +65,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         }
 
         public void bind(Comment comment) throws ParseException {
+            Log.d(TAG, "binding " + comment.getDescription());
             tvCommentBody.setText(comment.getDescription());
-            tvCommentUser.setText(comment.getUser().fetchIfNeeded().getUsername());
+            tvCommentUser.setText(comment.getUser().getUsername());
         }
     }
 }

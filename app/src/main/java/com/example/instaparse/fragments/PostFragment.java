@@ -1,5 +1,7 @@
 package com.example.instaparse.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ import java.util.List;
 public class PostFragment extends Fragment {
 
     public String TAG = "PostFragment";
+    public int KEY_REQUEST_CODE = 42;
     protected RecyclerView rvPosts;
     protected PostAdapter adapter;
     protected List<Post> listPosts;
@@ -150,4 +153,6 @@ public class PostFragment extends Fragment {
             }
         });
     }
+
+
 }
