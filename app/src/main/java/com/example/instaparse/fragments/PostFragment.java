@@ -94,7 +94,11 @@ public class PostFragment extends Fragment {
         // Required empty public constructor
     }
 
-
+    @Override
+    public void onStart() {
+        queryPosts();
+        super.onStart();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,6 +118,7 @@ public class PostFragment extends Fragment {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
+        query.include(Post.KEY_COMMENT_LIST);
         query.setLimit(5);
         query.addDescendingOrder(Post.KEY_CREATED_KEY);
         query.findInBackground(new FindCallback<Post>() {
